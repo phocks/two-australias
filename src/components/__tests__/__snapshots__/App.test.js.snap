@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App It renders 1`] = `
+<div
+  className="root"
+>
+  <img
+    className="worm"
+    src="worm.svg"
+  />
+  <h1>
+    test-project
+  </h1>
+</div>
+`;
