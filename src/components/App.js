@@ -9,10 +9,10 @@ class App extends React.Component {
   componentDidMount() {
     console.log("Did mount!!");
 
-    document.getElementById("stage").appendChild(app.view);
+    
   }
   componentWillUnmount() {
-    app.stage.removeChild(bunny);
+    
   }
   render() {
     return (
