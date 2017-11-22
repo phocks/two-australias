@@ -1,6 +1,6 @@
 # Two Australias
 
-A project generated from [aunty](https://github.com/abcnews/aunty)'s `react-app` template.
+Just a test project
 
 ## Authors
 
