@@ -9,15 +9,13 @@ const styles = require("./App.scss");
 
 class App extends React.Component {
   componentDidMount() {
-    console.log("Did mount!!");
-
     const width = window.innerWidth;
     const height = window.innerHeight;
 
     // Add canvas
     let renderer = new THREE.WebGLRenderer();
     renderer.setSize(width, height);
-    document.getElementById('stage').appendChild(renderer.domElement);
+    document.getElementById("stage").appendChild(renderer.domElement);
 
     // Set up camera and scene
     let camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
@@ -27,20 +25,22 @@ class App extends React.Component {
     scene.background = new THREE.Color(0xffffff);
 
     // Generate points and add them to scene
-    const generated_points = d3.range(100000).map(phyllotaxis(10));
+    const generated_points = d3.range(10000).map(phyllotaxis(30));
     const pointsGeometry = new THREE.Geometry();
     const colors = [];
+    let i = 0.00001;
     for (const point of generated_points) {
       const vertex = new THREE.Vector3(point[0], point[1], 0);
       pointsGeometry.vertices.push(vertex);
       const color = new THREE.Color();
-      color.setHSL(Math.random(), 1, 0.5);
+      color.setHSL(Math.random(), 1, 0.4); // color.setHSL(Math.random(), 1, 0.5);
       colors.push(color);
+      i = i + 0.00001;
     }
     pointsGeometry.colors = colors;
     const pointsMaterial = new THREE.PointsMaterial({
       vertexColors: THREE.VertexColors,
-      size: 6,
+      size: 3,
       sizeAttenuation: false
     });
     const points = new THREE.Points(pointsGeometry, pointsMaterial);
@@ -132,37 +132,6 @@ class App extends React.Component {
         ];
       };
     }
-
-    // // Get our canvas element
-    // var canvas = document.getElementById("main-canvas");
-    // var width = 960;
-    // var height = 500;
-
-    // // // Create a WebGL 2D platform on the canvas:
-    // var platform = Stardust.platform("webgl-2d", canvas, width, height);
-
-    // // ... Load data and render your visualization
-    // var data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-    // var circleSpec = Stardust.mark.circle();
-
-    // var circles = Stardust.mark.create(circleSpec, platform);
-
-    // circles.attr("center", d => [d * 80, d * 20]);
-    // circles.attr("radius", d => d * 3);
-    // circles.attr("color", [0, 0, 0, 1]);
-
-    // circles.data(data);
-
-    // circles.render();
-
-    // function animate() {
-    //   circles.attr("radius", d => d * Math.random() * 3);
-    //   circles.render();
-    //   // console.log("Aniamted!");
-    // }
-
-    // const timer = D3Timer.interval(animate, 1000 / 15);
   }
   componentWillUnmount() {}
   render() {
