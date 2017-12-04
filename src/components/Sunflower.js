@@ -131,18 +131,19 @@ class Sunflower extends React.Component {
 
             // Set the camera to new coordinates
             camera.position.set(pos.x, pos.y, new_z);
-          } else {
-            // Handle panning
-            const { movementX, movementY } = event.sourceEvent;
+          } 
+          // else {
+          //   // Handle panning
+          //   const { movementX, movementY } = event.sourceEvent;
 
-            // Adjust mouse movement by current scale and set camera
-            const current_scale = getCurrentScale();
-            camera.position.set(
-              camera.position.x - movementX / current_scale,
-              camera.position.y + movementY / current_scale,
-              camera.position.z
-            );
-          }
+          //   // Adjust mouse movement by current scale and set camera
+          //   const current_scale = getCurrentScale();
+          //   camera.position.set(
+          //     camera.position.x - movementX / current_scale,
+          //     camera.position.y + movementY / current_scale,
+          //     camera.position.z
+          //   );
+          // }
         }
       });
 
