@@ -63,23 +63,23 @@ class Sunflower extends React.Component {
     scene.background = new THREE.Color(backgroundColor);
 
     // Generate points and add them to scene
-    const generated_points = d3.range(10000).map(phyllotaxis(30));
+    const generated_points = d3.range(10000).map(phyllotaxis(10));
     const pointsGeometry = new THREE.Geometry();
     const colors = [];
-    let i = 0.00001;
+    // let i = 0.00001;
     for (const point of generated_points) {
-      const vertex = new THREE.Vector3(point[0], point[1], Math.random() * 1000);
+      const vertex = new THREE.Vector3(point[0], point[1], Math.random() * 1000); // x, y, z
       pointsGeometry.vertices.push(vertex);
       const color = new THREE.Color();
-      color.setHSL(Math.random(), 1, 0.5); // color.setHSL(Math.random(), 1, 0.5);
+      color.setHSL(Math.random(), 1, 0.5);
       colors.push(color);
-      i = i + 0.00001;
+      // i = i + 0.00001;
     }
     pointsGeometry.colors = colors;
     const pointsMaterial = new THREE.PointsMaterial({
       vertexColors: THREE.VertexColors,
-      size: 3,
-      sizeAttenuation: false
+      size: 10,
+      // sizeAttenuation: true
     });
     const points = new THREE.Points(pointsGeometry, pointsMaterial);
     const pointsContainer = new THREE.Object3D();
