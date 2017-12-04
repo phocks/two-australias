@@ -1,6 +1,17 @@
 .wrapper {
-  background: 1px solid rgb(255, 115, 0);
+  // background: 1px solid rgb(255, 115, 0);
   // padding: 20px;
-  text-align: center;
-  color: black;
+  // text-align: center;
+  // color: black;
 }
+
+.interactive-canvas {
+  display: block;
+}
+
+// :global {
+//   canvas {
+//     display: inherit;
+//   }
+
+// }

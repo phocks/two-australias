@@ -1,6 +1,6 @@
 const React = require("react");
 const { render } = require("react-dom");
-require("babel-polyfill");
+require("babel-polyfill"); // Probably required for IE11 support
 
 const PROJECT_NAME = "two-australias";
 const root = document.querySelector(`[data-${PROJECT_NAME}-root]`);

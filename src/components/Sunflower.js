@@ -55,6 +55,8 @@ class Sunflower extends React.Component {
 
     document.getElementById("stage").appendChild(renderer.domElement);
 
+    d3.select("#stage canvas").classed(styles.interactiveCanvas, true);
+
     // Set up camera and scene
     let camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
     camera.position.set(0, 0, 10000);
@@ -68,7 +70,11 @@ class Sunflower extends React.Component {
     const colors = [];
     // let i = 0.00001;
     for (const point of generated_points) {
-      const vertex = new THREE.Vector3(point[0], point[1], Math.random() * 1000); // x, y, z
+      const vertex = new THREE.Vector3(
+        point[0],
+        point[1],
+        Math.random() * 1000
+      ); // x, y, z
       pointsGeometry.vertices.push(vertex);
       const color = new THREE.Color();
       color.setHSL(Math.random(), 1, 0.5);
@@ -79,7 +85,7 @@ class Sunflower extends React.Component {
     const pointsMaterial = new THREE.PointsMaterial({
       vertexColors: THREE.VertexColors,
       size: 10,
-      // sizeAttenuation: true
+      sizeAttenuation: true
     });
     const points = new THREE.Points(pointsGeometry, pointsMaterial);
     const pointsContainer = new THREE.Object3D();
@@ -131,19 +137,18 @@ class Sunflower extends React.Component {
 
             // Set the camera to new coordinates
             camera.position.set(pos.x, pos.y, new_z);
-          } 
-          // else {
-          //   // Handle panning
-          //   const { movementX, movementY } = event.sourceEvent;
+          } else {
+            // Handle panning
+            const { movementX, movementY } = event.sourceEvent;
 
-          //   // Adjust mouse movement by current scale and set camera
-          //   const current_scale = getCurrentScale();
-          //   camera.position.set(
-          //     camera.position.x - movementX / current_scale,
-          //     camera.position.y + movementY / current_scale,
-          //     camera.position.z
-          //   );
-          // }
+            // Adjust mouse movement by current scale and set camera
+            const current_scale = getCurrentScale();
+            camera.position.set(
+              camera.position.x - movementX / current_scale,
+              camera.position.y + movementY / current_scale,
+              camera.position.z
+            );
+          }
         }
       });
 
