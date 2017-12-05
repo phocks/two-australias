@@ -47,25 +47,31 @@ class Sunflower extends React.Component {
 
     const width = window.innerWidth;
     const height = window.innerHeight;
+    const viewAngle = 45;
+    const aspect = width / height;
+    const near = 1;
+    const far = 20000;
 
     // Add canvas
     let renderer = new THREE.WebGLRenderer();
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(width, height);
 
-    document.getElementById("stage").appendChild(renderer.domElement);
+    const stage = document.getElementById("stage");
+
+    stage.appendChild(renderer.domElement);
 
     d3.select("#stage canvas").classed(styles.interactiveCanvas, true);
 
     // Set up camera and scene
-    let camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
-    camera.position.set(0, 0, 10000);
+    let camera = new THREE.PerspectiveCamera(viewAngle, aspect, near, far);
+    camera.position.set(0, 0, far);
     camera.lookAt(new THREE.Vector3(0, 0, 0));
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(backgroundColor);
 
     // Generate points and add them to scene
-    const generated_points = d3.range(10000).map(phyllotaxis(10));
+    const generated_points = d3.range(100000).map(phyllotaxis(10));
     const pointsGeometry = new THREE.Geometry();
     const colors = [];
     // let i = 0.00001;
@@ -73,7 +79,7 @@ class Sunflower extends React.Component {
       const vertex = new THREE.Vector3(
         point[0],
         point[1],
-        Math.random() * 1000
+        Math.random() * 3000
       ); // x, y, z
       pointsGeometry.vertices.push(vertex);
       const color = new THREE.Color();
@@ -108,7 +114,7 @@ class Sunflower extends React.Component {
     // Set up zoom behavior
     const zoom = d3
       .zoom()
-      .scaleExtent([100, 10000])
+      .scaleExtent([100, far])
       .on("zoom", () => {
         const event = d3.event;
         if (event.sourceEvent) {
@@ -160,7 +166,7 @@ class Sunflower extends React.Component {
     view.on("dblclick.zoom", null);
 
     // Sync d3 zoom with camera z position
-    zoom.scaleTo(view, 10000);
+    zoom.scaleTo(view, far);
 
     // Three.js render loop
     function animate() {
