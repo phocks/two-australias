@@ -49,8 +49,9 @@ class Sunflower extends React.Component {
     const height = window.innerHeight;
     const viewAngle = 45;
     const aspect = width / height;
-    const near = 1;
-    const far = 20000;
+    const near = 0.1;
+    const far = 10000;
+    const mid = 5000;
 
     // Add canvas
     let renderer = new THREE.WebGLRenderer();
@@ -58,45 +59,77 @@ class Sunflower extends React.Component {
     renderer.setSize(width, height);
 
     const stage = document.getElementById("stage");
-
+    // Attach it to the page
     stage.appendChild(renderer.domElement);
-
     d3.select("#stage canvas").classed(styles.interactiveCanvas, true);
 
     // Set up camera and scene
     let camera = new THREE.PerspectiveCamera(viewAngle, aspect, near, far);
-    camera.position.set(0, 0, far);
+    camera.position.set(0, 0, mid);
     camera.lookAt(new THREE.Vector3(0, 0, 0));
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(backgroundColor);
 
     // Generate points and add them to scene
-    const generated_points = d3.range(100000).map(phyllotaxis(10));
+    const generated_points = d3.range(10000).map(phyllotaxis(30));
     const pointsGeometry = new THREE.Geometry();
-    const colors = [];
-    // let i = 0.00001;
+    let colors = [];
+
     for (const point of generated_points) {
-      const vertex = new THREE.Vector3(
-        point[0],
-        point[1],
-        Math.random() * 3000
-      ); // x, y, z
+      const vertex = new THREE.Vector3(point[0], point[1], Math.random() * 1.1); // x, y, z
       pointsGeometry.vertices.push(vertex);
       const color = new THREE.Color();
       color.setHSL(Math.random(), 1, 0.5);
       colors.push(color);
-      // i = i + 0.00001;
     }
     pointsGeometry.colors = colors;
     const pointsMaterial = new THREE.PointsMaterial({
       vertexColors: THREE.VertexColors,
-      size: 10,
+      size: 70,
       sizeAttenuation: true
     });
     const points = new THREE.Points(pointsGeometry, pointsMaterial);
     const pointsContainer = new THREE.Object3D();
     pointsContainer.add(points);
     scene.add(pointsContainer);
+
+    // create the sphere's material
+    const sphereMaterial = new THREE.MeshPhongMaterial({
+      color: 0xcc0000
+      // wireframe: true
+    });
+
+    // Set up the sphere vars
+    const RADIUS = 100;
+    const SEGMENTS = 16;
+    const RINGS = 16;
+
+    // Create a new mesh with
+    // sphere geometry - we will cover
+    // the sphereMaterial next!
+    const sphere = new THREE.Mesh(
+      new THREE.SphereGeometry(RADIUS, SEGMENTS, RINGS),
+
+      sphereMaterial
+    );
+
+    // Move the Sphere back in Z so we
+    // can see it.
+    sphere.position.z = 1000;
+
+    // Finally, add the sphere to the scene.
+    scene.add(sphere);
+
+    // create a point light
+    const pointLight = new THREE.PointLight(0xffffff);
+
+    // set its position
+    pointLight.position.x = 10;
+    pointLight.position.y = 50;
+    pointLight.position.z = 1300;
+
+    // add to the scene
+    scene.add(pointLight);
 
     // create a blue LineBasicMaterial
     // var material = new THREE.LineBasicMaterial({ color: 0x0000ff });
@@ -160,13 +193,14 @@ class Sunflower extends React.Component {
 
     // Add zoom listener
     const view = d3.select(renderer.domElement);
+    // Disabling for now until scrollytell etc goes in
     view.call(zoom);
 
     // Disable double click to zoom because I'm not handling it in Three.js
     view.on("dblclick.zoom", null);
 
     // Sync d3 zoom with camera z position
-    zoom.scaleTo(view, far);
+    zoom.scaleTo(view, mid);
 
     // Three.js render loop
     function animate() {

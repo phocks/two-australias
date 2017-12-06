@@ -9,6 +9,7 @@ const styles = require("./App.scss");
 
 const Sunflower = require("./Sunflower");
 const RandomWalk = require("./RandomWalk");
+const Cloud = require("./Cloud");
 
 class App extends React.Component {
   componentDidMount() {
@@ -21,7 +22,8 @@ class App extends React.Component {
         {/* Welcome to the app! */}
         {/* <canvas id="main-canvas" /> */}
         {/* <RandomWalk /> */}
-        <Sunflower />
+        {/* <Sunflower /> */}
+        < Cloud />
       </div>
     );
   }
