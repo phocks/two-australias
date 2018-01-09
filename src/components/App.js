@@ -23,9 +23,9 @@ class App extends React.Component {
         {/* Welcome to the app! */}
         {/* <canvas id="main-canvas" /> */}
         {/* <RandomWalk /> */}
-        {/* <Sunflower /> */}
+        <Sunflower />
         {/* < Cloud /> */}
-        <Dot />
+        {/* <Dot /> */}
       </div>
     );
   }
