@@ -21,7 +21,7 @@
     "@abcnews/aunty": "^7.6.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
-    "jest": "^21.2.1",
+    "jest": "^26.6.3",
     "react-test-renderer": "^16.1.1"
   },
   "dependencies": {
@@ -34,6 +34,6 @@
     "stardust-core": "^0.1.1",
     "stardust-webgl": "^0.1.1",
     "stats-js": "^1.0.0-alpha1",
-    "three": "^0.88.0"
+    "three": "^0.128.0"
   }
 }
